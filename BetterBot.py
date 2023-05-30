@@ -82,13 +82,14 @@ title = f"""
 
 print(Colorate.Vertical(Colors.cyan_to_blue, title))
 
-response = requests.get("https://raw.githubusercontent.com/PedrinBlox/test/main/version")
+response = requests.get("https://raw.githubusercontent.com/PedrinBlox/BetterBot/main/version")
 if response.status_code != 200:
     pass
 if not response.text.rstrip() == version:
         print(f"BETTERBOT HAS A NEW VERSION ({response.text.rstrip()}). PLEASE UPDATE YOUR FILE.")
-        print(f"IF YOU PREFER THIS VERSION, IT WILL CONTINUE IN 10 SECONDS.")
-        time.sleep(10)
+        print("REPOSITORY FOR BETTERBOT: https://github.com/PedrinBlox/BetterBot")
+        print(f"IF YOU PREFER THIS VERSION, IT WILL CONTINUE IN 15 SECONDS.")
+        time.sleep(15)
 
 title_printed = False
 
