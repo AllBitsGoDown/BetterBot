@@ -64,7 +64,7 @@ except ModuleNotFoundError:
     os.system('pip install requests')
 
 
-version = "1.0.1"
+version = "1.0.2"
 title = f"""
                                                                                                           v{version}
                  /$$$$$$$              /$$     /$$                         /$$$$$$$              /$$    
@@ -245,7 +245,12 @@ try:
         data = json.load(file)
 
     if data['discord']['enabled'] == True:
-        bot.run(data['discord']["token"])
+        if data['discord']['token']:
+            bot.run(data['discord']["token"])
+        else:
+            print("You have not set a token on config.json file!")
+            os.system('pause')
+            exit
     else:
         print("You have not enabled discord on config.json file!")
         os.system('pause')
