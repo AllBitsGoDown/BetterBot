@@ -19,14 +19,14 @@ B::::::::::::::::B   ee:::::::::::::e         tt:::::::::::tt   tt:::::::::::tt 
 BBBBBBBBBBBBBBBBB      eeeeeeeeeeeeee           ttttttttttt       ttttttttttt     eeeeeeeeeeeeee  rrrrrrr         BBBBBBBBBBBBBBBBB     ooooooooooo            ttttttttttt  
                                                                                                                                                      _        _             _____         _      _      
                                                                                                                                                     | |      | |           |  __ \       | |    (_)      
-                                                                                                                                 _ __ ___   __ _  __| | ___  | |__  _   _  | |__) |__  __| |_ __ _ _ __  
+                                                                                                                                 _ __ ___   __ _  __a| | ___  | |__  _   _  | |__) |__  __| |_ __ _ _ __  
                                                                                                                                 | '_ ` _ \ / _` |/ _` |/ _ \ | '_ \| | | | |  ___/ _ \/ _` | '__| | '_ \ 
                                                                                                                                 | | | | | | (_| | (_| |  __/ | |_) | |_| | | |  |  __/ (_| | |  | | | | |
                                                                                                                                 |_| |_| |_|\__,_|\__,_|\___| |_.__/ \__, | |_|   \___|\__,_|_|  |_|_| |_|
                                                                                                                                                                      __/ |                               
                                                                                                                                                                     |___/                                                                                                                                                                                 
 """
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    #         i spent 2 whole fucking days and didnt study for my exam just do make this shit and motherfuckers remade the text art, commands, and command names on chatgpt. this is my first big project and retarded kids remake the whole fucking project exactly the same like mine. this message is gonna remain forever on the project because retarted kids cant get project ideas. when i started this project i already knew i would encounter this issue and i was right. i am not gonna say who did it because i dont want any hate sent to them but please, let me start my coding career. and a special thanks if you took your time to read this and downloaded the original betterbot.
 #### REQUIREMENTS ####
 # main file for the sniper must be named "main.py"
 # config file for the sniper must be named "config.json"
@@ -35,13 +35,15 @@ BBBBBBBBBBBBBBBBB      eeeeeeeeeeeeee           ttttttttttt       ttttttttttt   
 # 1 - put this file in your sniper folder
 # 2 - change the "sniper_path" on the config BELOW (NOT CONFIG.JSON) to where your sniper is located. example: C:\Users\nuts\Downloads\ugc-sniper-main
 # 3 - change the config to your liking
-# 4 - go TO config.json file and set "discord" to "true" and put a token
+# 4 - go TO config.json file of your sniper and set "discord" to "true" and put a token
 # 5 - run this file as "Python" or "WindowsTerminal" and enjoy!
 
 #### CONFIG ####
 sniper_path = r"" # where your sniper is located (DONT REMOVE THE "r") | format: C:\Users\nuts\Downloads\ugc-sniper-main
 press_f11 = False # if this is set to "True" it will press the F11 key when the commands: restart, norooms, rooms and run is executed
 prefix = "." # prefix to use commands on the bot | example: .restart
+notification = False # sends notifications to a webhook when BetterBot is running, outdated, etc and sends notifications when your sniper is restarted, killed, started, etc
+notification_webhook = "https://discord.com" # if the setting notification is enabled it will send the notifications through this webhoook
 
 ############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
 ############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
@@ -64,7 +66,7 @@ except ModuleNotFoundError:
     os.system('pip install requests')
 
 
-version = "1.0.2"
+version = "2.0.0"
 title = f"""
                                                                                                           v{version}
                  /$$$$$$$              /$$     /$$                         /$$$$$$$              /$$    
@@ -82,14 +84,79 @@ title = f"""
 
 print(Colorate.Vertical(Colors.cyan_to_blue, title))
 
+def once_webhook():
+    webhook_data = {
+            "content": "============================================================",
+            "embeds": [
+                {
+                "title": "Notification | BetterBot started",
+                "color": 5832556,
+                "author": {
+                    "name": f"BetterBot v{version}"
+                }
+                }
+            ],
+        }
+    requests.post(notification_webhook, json=webhook_data)
+
+if notification == True:
+    once_webhook()
+
 response = requests.get("https://raw.githubusercontent.com/PedrinBlox/BetterBot/main/version")
 if response.status_code != 200:
     pass
 if not response.text.rstrip() == version:
-        print(f"BETTERBOT HAS A NEW VERSION ({response.text.rstrip()}). PLEASE UPDATE YOUR FILE.")
-        print("REPOSITORY FOR BETTERBOT: https://github.com/PedrinBlox/BetterBot")
-        print(f"IF YOU PREFER THIS VERSION, IT WILL CONTINUE IN 15 SECONDS.")
-        time.sleep(15)
+    if notification == True:
+        webhook_data = {
+            "embeds": [
+                {
+                "title": "Notification | BetterBot outdated",
+                "color": 16730184,
+                "fields": [
+                    {
+                    "name": "Current version:",
+                    "value": f"```{version}```",
+                    "inline": True
+                    },
+                    {
+                    "name": "New version:",
+                    "value": f"```{response.text.rstrip()}```",
+                    "inline": True
+                    }
+                ],
+                "author": {
+                    "name": f"BetterBot v{version}"
+                }
+                }
+            ],
+        }
+        requests.post(notification_webhook, json=webhook_data)
+
+    print(f"BETTERBOT HAS A NEW VERSION ({response.text.rstrip()}). PLEASE UPDATE YOUR FILE.")
+    print("REPOSITORY FOR BETTERBOT: https://github.com/PedrinBlox/BetterBot")
+    print(f"IF YOU PREFER THIS VERSION, IT WILL CONTINUE IN 15 SECONDS.")
+    time.sleep(15)
+elif response.text.rstrip() == version:
+    if notification == True:
+        webhook_data = {
+            "embeds": [
+                {
+                "title": "Notification | BetterBot up to date",
+                "color": 5832556,
+                "fields": [
+                    {
+                    "name": "Current version:",
+                    "value": f"```{version}```",
+                    "inline": True
+                    }
+                ],
+                "author": {
+                    "name": f"BetterBot v{version}"
+                }
+                }
+            ],
+        }
+        requests.post(notification_webhook, json=webhook_data)
 
 title_printed = False
 
@@ -141,6 +208,28 @@ try:
             pyautogui.press('Enter')
             if press_f11:
                 pyautogui.press('f11')
+            if notification == True:
+                with open('config.json', 'r') as file:
+                    data = json.load(file)
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": "Notification | Sniper restarted",
+                            "color": 5832556,
+                            "fields": [
+                                {
+                                "name": "Rooms",
+                                "value": f"```{data['rooms']['enabled']}```",
+                                "inline": True
+                                }
+                            ],
+                            "author": {
+                                "name": f"BetterBot v{version}"
+                            }
+                        }
+                    ],
+                }
+                requests.post(notification_webhook, json=webhook_data)
             await ctx.reply(':white_check_mark: | Sucessfully restarted Sniper process!')
 
         except Exception as e:
@@ -174,6 +263,28 @@ try:
             pyautogui.press('Enter')
             if press_f11:
                 pyautogui.press('f11')
+            if notification == True:
+                with open('config.json', 'r') as file:
+                    data = json.load(file)
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": "Notification | Sniper's rooms disabled",
+                            "color": 5832556,
+                            "fields": [
+                                {
+                                "name": "Rooms",
+                                "value": f"```{data['rooms']['enabled']}```",
+                                "inline": True
+                                }
+                            ],
+                            "author": {
+                                "name": f"BetterBot v{version}"
+                            }
+                        }
+                    ],
+                }
+                requests.post(notification_webhook, json=webhook_data)
             await ctx.reply(':white_check_mark: | Sucessfully disabled rooms!')
             
         except Exception as e:
@@ -205,6 +316,28 @@ try:
             pyautogui.press('Enter')
             if press_f11:
                 pyautogui.press('f11')
+            if notification == True:
+                with open('config.json', 'r') as file:
+                    data = json.load(file)
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": "Notification | Sniper's rooms enabled",
+                            "color": 5832556,
+                            "fields": [
+                                {
+                                "name": "Rooms",
+                                "value": f"```{data['rooms']['enabled']}```",
+                                "inline": True
+                                }
+                            ],
+                            "author": {
+                                "name": f"BetterBot v{version}"
+                            }
+                        }
+                    ],
+                }
+                requests.post(notification_webhook, json=webhook_data)
             await ctx.reply(':white_check_mark: | Sucessfully enabled rooms!')
             
         except Exception as e:
@@ -223,6 +356,28 @@ try:
                         pid = int(process.split()[1])
                         if pid != current_pid:
                             os.system(f'taskkill /PID {pid} /F')
+            if notification == True:
+                with open('config.json', 'r') as file:
+                    data = json.load(file)
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": "Notification | Sniper ended",
+                            "color": 5832556,
+                            "fields": [
+                                {
+                                "name": "Rooms",
+                                "value": f"```{data['rooms']['enabled']}```",
+                                "inline": True
+                                }
+                            ],
+                            "author": {
+                                "name": f"BetterBot v{version}"
+                            }
+                        }
+                    ],
+                }
+                requests.post(notification_webhook, json=webhook_data)
             await ctx.reply(':white_check_mark: | Sucessfully ended Sniper process!')
             
         except Exception as e:
@@ -237,8 +392,72 @@ try:
             pyautogui.press('Enter')
             if press_f11:
                 pyautogui.press('f11')
+            if notification == True:
+                with open('config.json', 'r') as file:
+                    data = json.load(file)
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": "Notification | Sniper started",
+                            "color": 5832556,
+                            "fields": [
+                                {
+                                "name": "Rooms",
+                                "value": f"```{data['rooms']['enabled']}```",
+                                "inline": True
+                                }
+                            ],
+                            "author": {
+                                "name": f"BetterBot v{version}"
+                            }
+                        }
+                    ],
+                }
+                requests.post(notification_webhook, json=webhook_data)
             await ctx.reply(':white_check_mark: | Succesfully started Sniper process!')
-            
+        except Exception as e:
+            await ctx.reply(f':x: | An error occured: {e}')
+
+    @bot.command()
+    async def screen(ctx):
+        try:
+            screenshot = pyautogui.screenshot()
+            screenshot.save(fr'{sniper_path}\screenshot.png')
+
+            if notification == True:
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": "Notification | Screenshot taken",
+                            "color": 5832556,
+                            "author": {
+                                "name": f"BetterBot v{version}"
+                            },
+                        }
+                    ]
+                }
+
+                requests.post(notification_webhook, json=webhook_data)
+
+            with open('screenshot.png', 'rb') as fp:
+                await ctx.reply(file=discord.File(fp, 'screenshot.png'))
+
+            time.sleep(3)
+
+            os.remove('screenshot.png')
+        except Exception as e:
+            await ctx.reply(f':x: | An error occured: {e}')
+
+    @bot.command()
+    async def checkversion(ctx):
+        try:
+            response = requests.get("https://raw.githubusercontent.com/PedrinBlox/BetterBot/main/version")
+            if response.status_code != 200:
+                pass
+            if not response.text.rstrip() == version:
+                await ctx.reply(f":x: | Your current version is outdated! Current version: {version}, New version: {response.text.rstrip()}")
+            elif response.text.rstrip() == version:
+                await ctx.reply(f":white_check_mark: | Your current version is up to date! Current version: {version}")
         except Exception as e:
             await ctx.reply(f':x: | An error occured: {e}')
 
@@ -256,6 +475,9 @@ try:
         print("You have not enabled discord on config.json file!")
         os.system('pause')
         exit
+
+    
+
 except Exception as e:
     print(f'An error occured: {e}')
     os.system('pause')
