@@ -9,6 +9,10 @@ BetterBot is a Xolo Sniper plugin that allows you to fully control your sniper t
 - Disable rooms command
 - Close sniper command
 - Enable rooms command
+- Screenshot command
+- Check version command
+- Notification setting
+- Update checker
 
 ## Installing and configuring
 - The installion tutorial is on the BetterBot.py file.
