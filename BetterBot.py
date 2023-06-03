@@ -30,7 +30,7 @@ BBBBBBBBBBBBBBBBB      eeeeeeeeeeeeee           ttttttttttt       ttttttttttt   
 #### REQUIREMENTS ####
 # main file for the sniper must be named "main.py"
 # config file for the sniper must be named "config.json"
-                                                                                                                                                         
+                                                                                                                                          
 #### TUTORIAL ####
 # 1 - put this file in your sniper folder
 # 2 - change the "sniper_path" on the config BELOW (NOT CONFIG.JSON) to where your sniper is located. example: C:\Users\nuts\Downloads\ugc-sniper-main
@@ -64,9 +64,9 @@ except ModuleNotFoundError:
     os.system('pip install pystyle')
     os.system('pip install asyncio')
     os.system('pip install requests')
+    os.system('pip install pillow')
 
-
-version = "2.0.0"
+version = "2.0.1"
 title = f"""
                                                                                                           v{version}
                  /$$$$$$$              /$$     /$$                         /$$$$$$$              /$$    
