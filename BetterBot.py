@@ -65,7 +65,7 @@ except ModuleNotFoundError:
     os.system('pip install requests')
     os.system('pip install pillow')
 
-version = "2.0.1"
+version = "2.0.2"
 title = f"""
                                                                                                           v{version}
                  /$$$$$$$              /$$     /$$                         /$$$$$$$              /$$    
