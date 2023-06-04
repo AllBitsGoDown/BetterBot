@@ -65,7 +65,7 @@ except ModuleNotFoundError:
     os.system('pip install requests')
     os.system('pip install pillow')
 
-version = "2.0.2"
+version = "2.0.3"
 title = f"""
                                                                                                           v{version}
                  /$$$$$$$              /$$     /$$                         /$$$$$$$              /$$    
@@ -446,6 +446,68 @@ try:
                 await ctx.reply(f":x: | Your current version is outdated! Current version: {version}, New version: {response.text.rstrip()}")
             elif response.text.rstrip() == version:
                 await ctx.reply(f":white_check_mark: | Your current version is up to date! Current version: {version}")
+        except Exception as e:
+            await ctx.reply(f':x: | An error occured: {e}')
+
+    @bot.command()
+    async def changeroom(ctx, roomcode=None): # thanks FallengOd for the code
+        if roomcode is None:
+            return await ctx.reply(":warning: | You have to enter the room code to change! Example: .changeroom BetterBot")
+        try:
+            with open('config.json', 'r+') as file:
+                data = json.load(file)
+                old_code = data['rooms']['room_code']
+                data['rooms']['room_code'] = roomcode
+                file.seek(0)
+                json.dump(data, file, indent=4)
+                file.truncate()
+            time.sleep(.5)
+            current_pid = os.getpid()
+            processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
+            programs_to_kill = ['python.exe', 'cmd.exe']
+            
+            if notification == True:
+                webhook_data = {
+                    "embeds": [
+                        {
+                            "title": "Notification | Room code changed",
+                            "color": 5832556,
+                            "fields": [
+                                {
+                                "name": "Old code",
+                                "value": f"```{old_code}```",
+                                "inline": True
+                                },
+                                {
+                                "name": "New code",
+                                "value": f"```{roomcode}```",
+                                "inline": True
+                                },
+                                {
+                                "name": "Rooms",
+                                "value": f"```{data['rooms']['enabled']}```",
+                                "inline": True
+                                }
+                            ],
+                            "author": {
+                                "name": f"BetterBot v{version}"
+                            }
+                        }
+                    ],
+                }
+                requests.post(notification_webhook, json=webhook_data)
+
+            for process in processes:
+                for program in programs_to_kill:
+                    if program in process:
+                        pid = int(process.split()[1])
+                        if pid != current_pid:
+                            os.system(f'taskkill /PID {pid} /F')
+            os.system(f"start /B start cmd.exe @cmd /k python main.py")
+            time.sleep(0.5)
+            if press_f11 == True:
+                pyautogui.press('f11')
+            await ctx.reply(f":white_check_mark: | Sucessfully changed room code to {roomcode}!")
         except Exception as e:
             await ctx.reply(f':x: | An error occured: {e}')
 
