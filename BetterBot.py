@@ -26,24 +26,23 @@ BBBBBBBBBBBBBBBBB      eeeeeeeeeeeeee           ttttttttttt       ttttttttttt   
                                                                                                                                                                      __/ |                               
                                                                                                                                                                     |___/                                                                                                                                                                                 
 """
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    #         i spent 2 whole fucking days and didnt study for my exam just do make this shit and motherfuckers remade the text art, commands, and command names on chatgpt. this is my first big project and retarded kids remake the whole fucking project exactly the same like mine. this message is gonna remain forever on the project because retarted kids cant get project ideas. when i started this project i already knew i would encounter this issue and i was right. i am not gonna say who did it because i dont want any hate sent to them but please, let me start my coding career. and a special thanks if you took your time to read this and downloaded the original betterbot.
+
 #### REQUIREMENTS ####
 # main file for the sniper must be named "main.py"
 # config file for the sniper must be named "config.json"
+# this file must be in your sniper path
                                                                                                                                           
 #### TUTORIAL ####
-# 1 - put this file in your sniper folder
-# 2 - change the "sniper_path" on the config BELOW (NOT CONFIG.JSON) to where your sniper is located. example: C:\Users\nuts\Downloads\ugc-sniper-main
-# 3 - change the config to your liking
-# 4 - go TO config.json file of your sniper and set "discord" to "true" and put a token
-# 5 - run this file as "Python" or "WindowsTerminal" and enjoy!
+# 1 - put this file in your sniper folder (required)
+# 2 - change the config to your liking
+# 3 - go TO config.json file of your sniper and set "discord" to "true" and put a token
+# 4 - run this file as "Python" or "WindowsTerminal" and enjoy!
 
 #### CONFIG ####
-sniper_path = r"" # where your sniper is located (DONT REMOVE THE "r") | format: C:\Users\nuts\Downloads\ugc-sniper-main
 press_f11 = False # if this is set to "True" it will press the F11 key when the commands: restart, norooms, rooms and run is executed
 prefix = "." # prefix to use commands on the bot | example: .restart
 notification = False # sends notifications to a webhook when BetterBot is running, outdated, etc and sends notifications when your sniper is restarted, killed, started, etc
-notification_webhook = "https://discord.com" # if the setting notification is enabled it will send the notifications through this webhoook
+notification_webhook = "https://discord.com/" # if the setting notification is enabled it will send the notifications through this webhoook
 
 ############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
 ############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
@@ -201,12 +200,9 @@ try:
                         pid = int(process.split()[1])
                         if pid != current_pid:
                             os.system(f'taskkill /PID {pid} /F')
-            time.sleep(.5)
-            os.system(r"start cmd")
-            time.sleep(0.1)
-            pyautogui.write(fr'python "{sniper_path}\main.py"')
-            pyautogui.press('Enter')
-            if press_f11:
+            os.system(f"start /B start cmd.exe @cmd /k python main.py")
+            time.sleep(0.5)
+            if press_f11 == True:
                 pyautogui.press('f11')
             if notification == True:
                 with open('config.json', 'r') as file:
@@ -233,7 +229,6 @@ try:
             await ctx.reply(':white_check_mark: | Sucessfully restarted Sniper process!')
 
         except Exception as e:
-            print(sniper_path+"\main.py")
             await ctx.reply(f':x: | An error occured: {e}')
             print(e)
 
@@ -256,12 +251,9 @@ try:
                         pid = int(process.split()[1])
                         if pid != current_pid:
                             os.system(f'taskkill /PID {pid} /F')
-            time.sleep(.5)
-            os.system(r"start cmd")
-            time.sleep(0.1)
-            pyautogui.write(fr'python "{sniper_path}\main.py"')
-            pyautogui.press('Enter')
-            if press_f11:
+            os.system(f"start /B start cmd.exe @cmd /k python main.py")
+            time.sleep(0.5)
+            if press_f11 == True:
                 pyautogui.press('f11')
             if notification == True:
                 with open('config.json', 'r') as file:
@@ -309,12 +301,9 @@ try:
                         pid = int(process.split()[1])
                         if pid != current_pid:
                             os.system(f'taskkill /PID {pid} /F')
-            time.sleep(.5)
-            os.system(r"start cmd")
-            time.sleep(0.1)
-            pyautogui.write(fr'python "{sniper_path}\main.py"')
-            pyautogui.press('Enter')
-            if press_f11:
+            os.system(f"start /B start cmd.exe @cmd /k python main.py")
+            time.sleep(0.5)
+            if press_f11 == True:
                 pyautogui.press('f11')
             if notification == True:
                 with open('config.json', 'r') as file:
@@ -386,11 +375,9 @@ try:
     @bot.command()
     async def run(ctx):
         try:
-            os.system(r"start cmd")
-            time.sleep(0.1)
-            pyautogui.write(fr'python "{sniper_path}\main.py"')
-            pyautogui.press('Enter')
-            if press_f11:
+            os.system(f"start /B start cmd.exe @cmd /k python main.py")
+            time.sleep(0.5)
+            if press_f11 == True:
                 pyautogui.press('f11')
             if notification == True:
                 with open('config.json', 'r') as file:
@@ -421,8 +408,11 @@ try:
     @bot.command()
     async def screen(ctx):
         try:
-            screenshot = pyautogui.screenshot()
-            screenshot.save(fr'{sniper_path}\screenshot.png')
+            if os.path.exists("BetterBot_temp") == False:
+                os.makedirs("BetterBot_temp")
+
+            temp = os.path.join("BetterBot_temp", 'screenshot.png')
+            pyautogui.screenshot(temp)
 
             if notification == True:
                 webhook_data = {
@@ -436,15 +426,13 @@ try:
                         }
                     ]
                 }
-
                 requests.post(notification_webhook, json=webhook_data)
-
-            with open('screenshot.png', 'rb') as fp:
-                await ctx.reply(file=discord.File(fp, 'screenshot.png'))
+            
+            await ctx.reply(file=discord.File(temp,filename='screenshot.png'))
 
             time.sleep(3)
 
-            os.remove('screenshot.png')
+            os.remove(temp)
         except Exception as e:
             await ctx.reply(f':x: | An error occured: {e}')
 
