@@ -1,7 +1,7 @@
 # BetterBot
 
 ## Overview
-BetterBot is a Xolo Sniper plugin that allows you to fully control your sniper through Discord.
+BetterBot is a Xolo Sniper plugin that allows you to fully control your xolo sniper through Discord.
 
 ## Installing and configuring
 - Place the BetterBot.py file on your xolo sniper folder and change your "token" on the config part of BetterBot.py to your discord bot token
