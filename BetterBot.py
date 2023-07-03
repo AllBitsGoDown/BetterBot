@@ -1,71 +1,30 @@
-"""
-                                                                                                                                                                            
-                                                                                                                                                                            
-BBBBBBBBBBBBBBBBB                              tttt              tttt                                             BBBBBBBBBBBBBBBBB                           tttt          
-B::::::::::::::::B                          ttt:::t           ttt:::t                                             B::::::::::::::::B                       ttt:::t          
-B::::::BBBBBB:::::B                         t:::::t           t:::::t                                             B::::::BBBBBB:::::B                      t:::::t          
-BB:::::B     B:::::B                        t:::::t           t:::::t                                             BB:::::B     B:::::B                     t:::::t          
-  B::::B     B:::::B   eeeeeeeeeeee   ttttttt:::::ttttttttttttt:::::ttttttt       eeeeeeeeeeee   rrrrr   rrrrrrrrr  B::::B     B:::::B  ooooooooooo  ttttttt:::::ttttttt    
-  B::::B     B:::::B ee::::::::::::ee t:::::::::::::::::t:::::::::::::::::t     ee::::::::::::ee r::::rrr:::::::::r B::::B     B:::::Boo:::::::::::oot:::::::::::::::::t    
-  B::::BBBBBB:::::B e::::::eeeee:::::et:::::::::::::::::t:::::::::::::::::t    e::::::eeeee:::::er:::::::::::::::::rB::::BBBBBB:::::Bo:::::::::::::::t:::::::::::::::::t    
-  B:::::::::::::BB e::::::e     e:::::tttttt:::::::ttttttttttt:::::::tttttt   e::::::e     e:::::rr::::::rrrrr::::::B:::::::::::::BB o:::::ooooo:::::tttttt:::::::tttttt    
-  B::::BBBBBB:::::Be:::::::eeeee::::::e     t:::::t           t:::::t         e:::::::eeeee::::::er:::::r     r:::::B::::BBBBBB:::::Bo::::o     o::::o     t:::::t          
-  B::::B     B:::::e:::::::::::::::::e      t:::::t           t:::::t         e:::::::::::::::::e r:::::r     rrrrrrB::::B     B:::::o::::o     o::::o     t:::::t          
-  B::::B     B:::::e::::::eeeeeeeeeee       t:::::t           t:::::t         e::::::eeeeeeeeeee  r:::::r           B::::B     B:::::o::::o     o::::o     t:::::t          
-  B::::B     B:::::e:::::::e                t:::::t    tttttt t:::::t    ttttte:::::::e           r:::::r           B::::B     B:::::o::::o     o::::o     t:::::t    tttttt
-BB:::::BBBBBB::::::e::::::::e               t::::::tttt:::::t t::::::tttt:::::e::::::::e          r:::::r         BB:::::BBBBBB::::::o:::::ooooo:::::o     t::::::tttt:::::t
-B:::::::::::::::::B e::::::::eeeeeeee       tt::::::::::::::t tt::::::::::::::te::::::::eeeeeeee  r:::::r         B:::::::::::::::::Bo:::::::::::::::o     tt::::::::::::::t
-B::::::::::::::::B   ee:::::::::::::e         tt:::::::::::tt   tt:::::::::::tt ee:::::::::::::e  r:::::r         B::::::::::::::::B  oo:::::::::::oo        tt:::::::::::tt
-BBBBBBBBBBBBBBBBB      eeeeeeeeeeeeee           ttttttttttt       ttttttttttt     eeeeeeeeeeeeee  rrrrrrr         BBBBBBBBBBBBBBBBB     ooooooooooo            ttttttttttt  
-                                                                                                                                                     _        _             _____         _      _      
-                                                                                                                                                    | |      | |           |  __ \       | |    (_)      
-                                                                                                                                 _ __ ___   __ _  __a| | ___  | |__  _   _  | |__) |__  __| |_ __ _ _ __  
-                                                                                                                                | '_ ` _ \ / _` |/ _` |/ _ \ | '_ \| | | | |  ___/ _ \/ _` | '__| | '_ \ 
-                                                                                                                                | | | | | | (_| | (_| |  __/ | |_) | |_| | | |  |  __/ (_| | |  | | | | |
-                                                                                                                                |_| |_| |_|\__,_|\__,_|\___| |_.__/ \__, | |_|   \___|\__,_|_|  |_|_| |_|
-                                                                                                                                                                     __/ |                               
-                                                                                                                                                                    |___/                                                                                                                                                                                 
-"""
+# BetterBot made by pe.drin#0
+# If you want to give suggestions for BetterBot or got errors, DM me it.
+# v3.0.0
 
-#### REQUIREMENTS ####
-# main file for the sniper must be named "main.py"
-# config file for the sniper must be named "config.json"
-# this file must be in your sniper path
-                                                                                                                                          
-#### TUTORIAL ####
-# 1 - put this file in your sniper folder (required)
-# 2 - change the config to your liking
-# 3 - go TO config.json file of your sniper and set "discord" to "true" and put a token
-# 4 - run this file as "Python" or "WindowsTerminal" and enjoy!
+#### Config ####
+token = "" # Your bot token (required)
+prefix = ">" # Your bot's prefix (required)
+your_id = "" # Your discord's ID (required for special commands)
+################
 
-#### CONFIG ####
-press_f11 = False # if this is set to "True" it will press the F11 key when the commands: restart, norooms, rooms and run is executed
-prefix = "." # prefix to use commands on the bot | example: .restart
-notification = False # sends notifications to a webhook when BetterBot is running, outdated, etc and sends notifications when your sniper is restarted, killed, started, etc
-notification_webhook = "https://discord.com/" # if the setting notification is enabled it will send the notifications through this webhoook
-
-############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
-############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
-############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
-############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
-############### DONT TOUCH THIS IF YOU DONT KNOW WHAT YOUR DOING ###############
-
-import time
 import os
+import asyncio
+import time
+from pystyle import Colorate, Colors, Center
+import discord
+from discord.ext import commands
+import subprocess
+import json
+import aiohttp
+import requests
+import asyncio
 
-os.system('cls' if os.name == 'nt' else 'clear')
+os.system('title BetterBot')
 
-try:
-    from pystyle import Colorate, Colors, Center
-    import asyncio
-    import requests
-except ModuleNotFoundError:
-    os.system('pip install pystyle')
-    os.system('pip install asyncio')
-    os.system('pip install requests')
-    os.system('pip install pillow')
+bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
 
-version = "2.0.3"
+version = "3.0.0"
 title = f"""
                                                                                                           v{version}
                  /$$$$$$$              /$$     /$$                         /$$$$$$$              /$$    
@@ -83,112 +42,110 @@ title = f"""
 
 print(Colorate.Vertical(Colors.cyan_to_blue, title))
 
-def once_webhook():
-    webhook_data = {
-            "content": "============================================================",
-            "embeds": [
-                {
-                "title": "Notification | BetterBot started",
-                "color": 5832556,
-                "author": {
-                    "name": f"BetterBot v{version}"
-                }
-                }
-            ],
-        }
-    requests.post(notification_webhook, json=webhook_data)
-
-if notification == True:
-    once_webhook()
-
 response = requests.get("https://raw.githubusercontent.com/PedrinBlox/BetterBot/main/version")
 if response.status_code != 200:
     pass
 if not response.text.rstrip() == version:
-    if notification == True:
-        webhook_data = {
-            "embeds": [
-                {
-                "title": "Notification | BetterBot outdated",
-                "color": 16730184,
-                "fields": [
-                    {
-                    "name": "Current version:",
-                    "value": f"```{version}```",
-                    "inline": True
-                    },
-                    {
-                    "name": "New version:",
-                    "value": f"```{response.text.rstrip()}```",
-                    "inline": True
-                    }
-                ],
-                "author": {
-                    "name": f"BetterBot v{version}"
-                }
-                }
-            ],
-        }
-        requests.post(notification_webhook, json=webhook_data)
-
     print(f"BETTERBOT HAS A NEW VERSION ({response.text.rstrip()}). PLEASE UPDATE YOUR FILE.")
     print("REPOSITORY FOR BETTERBOT: https://github.com/PedrinBlox/BetterBot")
-    print(f"IF YOU PREFER THIS VERSION, IT WILL CONTINUE IN 15 SECONDS.")
-    time.sleep(15)
-elif response.text.rstrip() == version:
-    if notification == True:
-        webhook_data = {
-            "embeds": [
-                {
-                "title": "Notification | BetterBot up to date",
-                "color": 5832556,
-                "fields": [
-                    {
-                    "name": "Current version:",
-                    "value": f"```{version}```",
-                    "inline": True
-                    }
-                ],
-                "author": {
-                    "name": f"BetterBot v{version}"
-                }
-                }
-            ],
-        }
-        requests.post(notification_webhook, json=webhook_data)
+    print(f"IF YOU PREFER THIS VERSION, IT WILL CONTINUE IN 10 SECONDS.")
+    time.sleep(10)
 
 title_printed = False
+with open('config.json', 'r') as file:
+    config = json.load(file)
+    search_cookie = config["cookies"]["search_cookie"]
 
+####### Functions #######
 async def print_title(interval):
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
-        buffer = Colorate.Vertical(Colors.cyan_to_blue, title)  # Prepare the output
-        print(buffer, end='', flush=True)  # Print and flush buffer
+        buffer = Colorate.Vertical(Colors.cyan_to_blue, title)
+        print(buffer, end='', flush=True)
         await asyncio.sleep(interval)
         time.sleep(0.2)
 
-try:
-    try:
-        import pyautogui
-        import discord
-        from discord.ext import commands
-        import subprocess
-        import json
-    except ModuleNotFoundError:
-        print("Some modules may be missing. Installing them...")
-        os.system('pip install discord')
-        os.system('pip install pyautogui')
+async def create_screenshot():
+    from io import BytesIO
+    from PIL import ImageGrab
 
-    os.system('title BetterBot')
+    screenshot = ImageGrab.grab()
+    img_bytes = BytesIO()
+    screenshot.save(img_bytes, format='PNG')
+    img_bytes.seek(0)
 
-    bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
+    embed = discord.Embed(color=0x1e5dff)
+    file = discord.File(img_bytes, filename='ss.png')
+    embed.set_image(url='attachment://ss.png')
 
-    @bot.event
-    async def on_ready():
-        asyncio.create_task(print_title(0.1))
+    return file, embed
 
-    @bot.command()
-    async def restart(ctx):
+async def isowner(id):
+    if int(id) == int(your_id):
+        return True
+    else:
+        return False
+    
+def get_thumbnail(item_id) -> str:
+    res = requests.get(
+        f'https://thumbnails.roproxy.com/v1/assets?assetIds={item_id}&size=420x420&format=Png'
+    ).json()
+    return res['data'][0]['imageUrl']
+
+async def get_x_token():
+    while True:
+        try:
+            async with aiohttp.ClientSession(cookies={".ROBLOSECURITY": search_cookie}) as client:
+                response = await client.post("https://accountsettings.roblox.com/v1/email", ssl=False)
+                xcsrf_token = response.headers.get("x-csrf-token")
+                if xcsrf_token is None:
+                    raise Exception("An error occurred while getting the X-CSRF-TOKEN. Could be due to an invalid Roblox Cookie")
+                return xcsrf_token
+        except aiohttp.ClientConnectorError as e:
+            print(f"Connection error: {e}")
+            await asyncio.sleep(5)
+
+async def get_details(item_id_for_details):
+    while True:
+        try:
+            url = f"https://catalog.roproxy.com/v1/catalog/items/{item_id_for_details}/details?itemType=Asset"
+            xcsrf_token = await get_x_token()
+            headers = {"x-csrf-token": xcsrf_token, 'Accept': "application/json"}
+            cookies = {".ROBLOSECURITY": search_cookie}
+
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, headers=headers, cookies=cookies, ssl=False) as response:
+                    data = await response.json()
+                    return data
+        except aiohttp.ClientConnectorError as e:
+            print(f"Connection error: {e}")
+            await asyncio.sleep(5)
+##########################
+
+@bot.event
+async def on_ready():
+    asyncio.create_task(print_title(0.1))
+
+@bot.command()
+async def ping(ctx):
+    await ctx.reply(f"Pong! {bot.latency}ms")
+
+@bot.command()
+async def screenshot(ctx):
+    if await isowner(ctx.author.id):
+        try:
+            file, embed = await create_screenshot()
+        except ImportError:
+            await ctx.reply(":x: Failed to create the screenshot. Check if u have the library Pillow installed.")
+            return
+        try:
+            await ctx.reply(file=file, embed=embed)
+        except Exception as e:
+            await ctx.reply(f":x: | Failed to send the screenshot. Error {e}")
+
+@bot.command()
+async def restart(ctx):
+    if await isowner(ctx.author.id):
         try:
             current_pid = os.getpid()
             processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
@@ -201,301 +158,166 @@ try:
                         if pid != current_pid:
                             os.system(f'taskkill /PID {pid} /F')
             os.system(f"start /B start cmd.exe @cmd /k python main.py")
-            time.sleep(0.5)
-            if press_f11 == True:
-                pyautogui.press('f11')
-            if notification == True:
-                with open('config.json', 'r') as file:
-                    data = json.load(file)
-                webhook_data = {
-                    "embeds": [
-                        {
-                            "title": "Notification | Sniper restarted",
-                            "color": 5832556,
-                            "fields": [
-                                {
-                                "name": "Rooms",
-                                "value": f"```{data['rooms']['enabled']}```",
-                                "inline": True
-                                }
-                            ],
-                            "author": {
-                                "name": f"BetterBot v{version}"
-                            }
-                        }
-                    ],
-                }
-                requests.post(notification_webhook, json=webhook_data)
-            await ctx.reply(':white_check_mark: | Sucessfully restarted Sniper process!')
-
+            time.sleep(.5)
         except Exception as e:
-            await ctx.reply(f':x: | An error occured: {e}')
-            print(e)
+            await ctx.reply(f":x: | An error occured while trying to restart xolo sniper! Error: {e}")
 
-    @bot.command()
-    async def norooms(ctx):
+@bot.command()
+async def run(ctx):
+    if await isowner(ctx.author.id):
+        try:
+            os.system(f"start /B start cmd.exe @cmd /k python main.py")
+            time.sleep(.5)
+            await ctx.reply(":white_check_mark: | Succesfully started xolo sniper!")
+        except Exception as e:
+            time.sleep(.5)
+            await ctx.reply(f":x: | An error occured while trying to start xolo sniper! Error: {e}")
+
+@bot.command()
+async def kill(ctx):
+    if await isowner(ctx.author.id):
+        try:
+            current_pid = os.getpid()
+            processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
+            programs_to_kill = ['python.exe', 'cmd.exe']
+
+            for process in processes:
+                for program in programs_to_kill:
+                    if program in process:
+                        pid = int(process.split()[1])
+                        if pid != current_pid:
+                            os.system(f'taskkill /PID {pid} /F')
+            time.sleep(.5)
+            await ctx.reply(":white_check_mark: | Succesfully closed xolo sniper!")
+        except Exception as e:
+            time.sleep(.5)
+            await ctx.reply(f":x: | An error occured while trying to close xolo sniper! Error: {e}")
+
+@bot.command()
+async def add(ctx, id=None):
+    if await isowner(ctx.author.id):
+        if id is None:
+            await ctx.reply(f":x: | You need to specify an ID! Usage: {prefix}add <ID>")
+            return
+
+        try:
+            id = int(id)
+        except ValueError:
+            await ctx.reply(f":x: | The ID must be a number! Usage: {prefix}add <ID>")
+            return
+
+        with open('config.json', 'r+') as file: 
+            config = json.load(file)
+            if id in config['items']:
+                await ctx.reply(f":x: | ID {id} is already in the list!")
+            else:
+                config['items'].append(id)
+                file.seek(0)
+                json.dump(config, file, indent=4)
+                file.truncate()
+
+                time.sleep(.5)
+
+                await ctx.reply(f":white_check_mark: | ID {id} added successfully!")
+
+                current_pid = os.getpid()
+                processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
+                programs_to_kill = ['python.exe', 'cmd.exe']
+
+                for process in processes:
+                    for program in programs_to_kill:
+                        if program in process:
+                            pid = int(process.split()[1])
+                            if pid != current_pid:
+                                os.system(f'taskkill /PID {pid} /F')
+
+                time.sleep(.5)
+                os.system(f"start /B start cmd.exe @cmd /k python main.py")
+
+@bot.command()
+async def remove(ctx, id=None):
+    if await isowner(ctx.author.id):
+        if id is None:
+            await ctx.reply(f":x: | You need to specify an ID! Usage: {prefix}remove <ID>")
+            return
+
+        try:
+            id = int(id)
+        except ValueError:
+            await ctx.reply(f":x: | The ID must be a number! Usage: {prefix}remove <ID>")
+            return
+
+        with open('config.json', 'r+') as file: 
+            config = json.load(file)
+            if id in config['items']:
+                config['items'].remove(id)
+                file.seek(0)
+                json.dump(config, file, indent=4)
+                file.truncate()
+
+                time.sleep(.5)
+
+                await ctx.reply(f":white_check_mark: | ID {id} removed successfully!")
+
+                current_pid = os.getpid()
+                processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
+                programs_to_kill = ['python.exe', 'cmd.exe']
+
+                for process in processes:
+                    for program in programs_to_kill:
+                        if program in process:
+                            pid = int(process.split()[1])
+                            if pid != current_pid:
+                                os.system(f'taskkill /PID {pid} /F')
+
+                time.sleep(.5)
+                os.system(f"start /B start cmd.exe @cmd /k python main.py")
+            else:
+                await ctx.reply(f":x: | ID {id} is not in the list!")
+
+@bot.command()
+async def items(ctx):
+    if await isowner(ctx.author.id):
         try:
             with open('config.json', 'r') as file:
-                data = json.load(file)
-            data['rooms']['enabled'] = False
-            with open('config.json', 'w') as file:
-                json.dump(data, file, indent=4)
-            time.sleep(.5)
-            current_pid = os.getpid()
-            processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
-            programs_to_kill = ['python.exe', 'cmd.exe']
+                config = json.load(file)
+                items = config['items']
 
-            for process in processes:
-                for program in programs_to_kill:
-                    if program in process:
-                        pid = int(process.split()[1])
-                        if pid != current_pid:
-                            os.system(f'taskkill /PID {pid} /F')
-            os.system(f"start /B start cmd.exe @cmd /k python main.py")
-            time.sleep(0.5)
-            if press_f11 == True:
-                pyautogui.press('f11')
-            if notification == True:
-                with open('config.json', 'r') as file:
-                    data = json.load(file)
-                webhook_data = {
-                    "embeds": [
-                        {
-                            "title": "Notification | Sniper's rooms disabled",
-                            "color": 5832556,
-                            "fields": [
-                                {
-                                "name": "Rooms",
-                                "value": f"```{data['rooms']['enabled']}```",
-                                "inline": True
-                                }
-                            ],
-                            "author": {
-                                "name": f"BetterBot v{version}"
-                            }
-                        }
-                    ],
-                }
-                requests.post(notification_webhook, json=webhook_data)
-            await ctx.reply(':white_check_mark: | Sucessfully disabled rooms!')
-            
+                embed = discord.Embed(
+                    title="Item List",
+                    color=0x1e5dff
+                )
+
+                for id in items:
+                    details = await get_details(id)
+                    name = details.get("name", "None")
+
+                    embed.add_field(name="", value=f"``{id} - {name}``", inline=False)
+
+                await ctx.reply(embed=embed)
         except Exception as e:
-            await ctx.reply(f':x: | An error occured: {e}')
+            await ctx.reply(f":x: An error occurred while trying to get the items. Try restarting BetterBot. Error: {e}")
 
-    @bot.command()
-    async def rooms(ctx):
-        try:
-            with open('config.json', 'r') as file:
-                data = json.load(file)
-            data['rooms']['enabled'] = True
-            with open('config.json', 'w') as file:
-                json.dump(data, file, indent=4)
-            time.sleep(.5)
-            current_pid = os.getpid()
-            processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
-            programs_to_kill = ['python.exe', 'cmd.exe']
-
-            for process in processes:
-                for program in programs_to_kill:
-                    if program in process:
-                        pid = int(process.split()[1])
-                        if pid != current_pid:
-                            os.system(f'taskkill /PID {pid} /F')
-            os.system(f"start /B start cmd.exe @cmd /k python main.py")
-            time.sleep(0.5)
-            if press_f11 == True:
-                pyautogui.press('f11')
-            if notification == True:
-                with open('config.json', 'r') as file:
-                    data = json.load(file)
-                webhook_data = {
-                    "embeds": [
-                        {
-                            "title": "Notification | Sniper's rooms enabled",
-                            "color": 5832556,
-                            "fields": [
-                                {
-                                "name": "Rooms",
-                                "value": f"```{data['rooms']['enabled']}```",
-                                "inline": True
-                                }
-                            ],
-                            "author": {
-                                "name": f"BetterBot v{version}"
-                            }
-                        }
-                    ],
-                }
-                requests.post(notification_webhook, json=webhook_data)
-            await ctx.reply(':white_check_mark: | Sucessfully enabled rooms!')
-            
-        except Exception as e:
-            await ctx.reply(f':x: | An error occured: {e}')
-
-    @bot.command()
-    async def kill(ctx):
-        try:
-            current_pid = os.getpid()
-            processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
-            programs_to_kill = ['python.exe', 'cmd.exe']
-
-            for process in processes:
-                for program in programs_to_kill:
-                    if program in process:
-                        pid = int(process.split()[1])
-                        if pid != current_pid:
-                            os.system(f'taskkill /PID {pid} /F')
-            if notification == True:
-                with open('config.json', 'r') as file:
-                    data = json.load(file)
-                webhook_data = {
-                    "embeds": [
-                        {
-                            "title": "Notification | Sniper ended",
-                            "color": 5832556,
-                            "fields": [
-                                {
-                                "name": "Rooms",
-                                "value": f"```{data['rooms']['enabled']}```",
-                                "inline": True
-                                }
-                            ],
-                            "author": {
-                                "name": f"BetterBot v{version}"
-                            }
-                        }
-                    ],
-                }
-                requests.post(notification_webhook, json=webhook_data)
-            await ctx.reply(':white_check_mark: | Sucessfully ended Sniper process!')
-            
-        except Exception as e:
-            await ctx.reply(f':x: | An error occured: {e}')
-
-    @bot.command()
-    async def run(ctx):
-        try:
-            os.system(f"start /B start cmd.exe @cmd /k python main.py")
-            time.sleep(0.5)
-            if press_f11 == True:
-                pyautogui.press('f11')
-            if notification == True:
-                with open('config.json', 'r') as file:
-                    data = json.load(file)
-                webhook_data = {
-                    "embeds": [
-                        {
-                            "title": "Notification | Sniper started",
-                            "color": 5832556,
-                            "fields": [
-                                {
-                                "name": "Rooms",
-                                "value": f"```{data['rooms']['enabled']}```",
-                                "inline": True
-                                }
-                            ],
-                            "author": {
-                                "name": f"BetterBot v{version}"
-                            }
-                        }
-                    ],
-                }
-                requests.post(notification_webhook, json=webhook_data)
-            await ctx.reply(':white_check_mark: | Succesfully started Sniper process!')
-        except Exception as e:
-            await ctx.reply(f':x: | An error occured: {e}')
-
-    @bot.command()
-    async def screen(ctx):
-        try:
-            if os.path.exists("BetterBot_temp") == False:
-                os.makedirs("BetterBot_temp")
-
-            temp = os.path.join("BetterBot_temp", 'screenshot.png')
-            pyautogui.screenshot(temp)
-
-            if notification == True:
-                webhook_data = {
-                    "embeds": [
-                        {
-                            "title": "Notification | Screenshot taken",
-                            "color": 5832556,
-                            "author": {
-                                "name": f"BetterBot v{version}"
-                            },
-                        }
-                    ]
-                }
-                requests.post(notification_webhook, json=webhook_data)
-            
-            await ctx.reply(file=discord.File(temp,filename='screenshot.png'))
-
-            time.sleep(3)
-
-            os.remove(temp)
-        except Exception as e:
-            await ctx.reply(f':x: | An error occured: {e}')
-
-    @bot.command()
-    async def checkversion(ctx):
-        try:
-            response = requests.get("https://raw.githubusercontent.com/PedrinBlox/BetterBot/main/version")
-            if response.status_code != 200:
-                pass
-            if not response.text.rstrip() == version:
-                await ctx.reply(f":x: | Your current version is outdated! Current version: {version}, New version: {response.text.rstrip()}")
-            elif response.text.rstrip() == version:
-                await ctx.reply(f":white_check_mark: | Your current version is up to date! Current version: {version}")
-        except Exception as e:
-            await ctx.reply(f':x: | An error occured: {e}')
-
-    @bot.command()
-    async def changeroom(ctx, roomcode=None): # thanks FallengOd for the code
-        if roomcode is None:
-            return await ctx.reply(":warning: | You have to enter the room code to change! Example: .changeroom BetterBot")
+@bot.command()
+async def cleanids(ctx):
+    if await isowner(ctx.author.id):
         try:
             with open('config.json', 'r+') as file:
-                data = json.load(file)
-                old_code = data['rooms']['room_code']
-                data['rooms']['room_code'] = roomcode
+
+                config = json.load(file)
+                config['items'] = []
                 file.seek(0)
-                json.dump(data, file, indent=4)
+
+                json.dump(config, file, indent=4)
                 file.truncate()
-            time.sleep(.5)
+
+                time.sleep(.5)
+
+            await ctx.reply(":white_check_mark: All IDs have been removed successfully!")
+
             current_pid = os.getpid()
             processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
             programs_to_kill = ['python.exe', 'cmd.exe']
-            
-            if notification == True:
-                webhook_data = {
-                    "embeds": [
-                        {
-                            "title": "Notification | Room code changed",
-                            "color": 5832556,
-                            "fields": [
-                                {
-                                "name": "Old code",
-                                "value": f"```{old_code}```",
-                                "inline": True
-                                },
-                                {
-                                "name": "New code",
-                                "value": f"```{roomcode}```",
-                                "inline": True
-                                },
-                                {
-                                "name": "Rooms",
-                                "value": f"```{data['rooms']['enabled']}```",
-                                "inline": True
-                                }
-                            ],
-                            "author": {
-                                "name": f"BetterBot v{version}"
-                            }
-                        }
-                    ],
-                }
-                requests.post(notification_webhook, json=webhook_data)
 
             for process in processes:
                 for program in programs_to_kill:
@@ -503,31 +325,111 @@ try:
                         pid = int(process.split()[1])
                         if pid != current_pid:
                             os.system(f'taskkill /PID {pid} /F')
+
+            time.sleep(.5)
             os.system(f"start /B start cmd.exe @cmd /k python main.py")
-            time.sleep(0.5)
-            if press_f11 == True:
-                pyautogui.press('f11')
-            await ctx.reply(f":white_check_mark: | Sucessfully changed room code to {roomcode}!")
         except Exception as e:
-            await ctx.reply(f':x: | An error occured: {e}')
+            await ctx.reply(f":x: An error occurred while trying to clean the IDs. Try restarting BetterBot. Error: {e}")
 
-    with open('config.json', 'r') as file:
-        data = json.load(file)
+@bot.command()
+async def autosearch(ctx, toggle=None):
+    if await isowner(ctx.author.id):
+        try:
+            if toggle == None:
+                await ctx.reply(f":x: Missing argument 'toggle'. Usage: {prefix}autosearch ``on/off``")
+                return
 
-    if data['discord']['enabled'] == True:
-        if data['discord']['token']:
-            bot.run(data['discord']["token"])
-        else:
-            print("You have not set a token on config.json file!")
-            os.system('pause')
-            exit
-    else:
-        print("You have not enabled discord on config.json file!")
-        os.system('pause')
-        exit
+            with open('config.json', 'r+') as file:
 
+                config = json.load(file)
+
+                if toggle.lower() == "on":
+                    config['autosearch'] = True
+                elif toggle.lower() == "off":
+                    config['autosearch'] = False
+                else:
+                    await ctx.reply(f":x: Invalid argument 'toggle'. Usage: {prefix}autosearch ``on/off``")
+                    return
+                
+                file.seek(0)
+                json.dump(config, file, indent=4)
+                file.truncate()
+
+                time.sleep(.5)
+
+            await ctx.reply(f":white_check_mark: Autosearch set to {toggle} succesfully!")
+
+            current_pid = os.getpid()
+            processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
+            programs_to_kill = ['python.exe', 'cmd.exe']
+
+            for process in processes:
+                for program in programs_to_kill:
+                    if program in process:
+                        pid = int(process.split()[1])
+                        if pid != current_pid:
+                            os.system(f'taskkill /PID {pid} /F')
+
+            time.sleep(.5)
+            os.system(f"start /B start cmd.exe @cmd /k python main.py")
+        except Exception as e:
+            await ctx.reply(f":x: An error occurred while trying to change autosearch value. Try restarting BetterBot. Error: {e}")
+
+@bot.command()
+async def details(ctx, id=None):
+    if id is None:
+        await ctx.reply(':x: | You need to put an item id! Example: .details 12345')
+        return
     
+    details = await get_details(id)
 
-except Exception as e:
-    print(f'An error occured: {e}')
-    os.system('pause')
+    name = details.get("name")
+    creator_name = details.get("creatorName")
+    creator_id = details.get("creatorTargetId")
+    price_status = details.get("priceStatus")
+    description = details.get("description")
+    #owned = details.get("owned")
+
+    ingame = details.get("saleLocationType") == "ExperiencesDevApiOnly"
+
+    price = details.get("price", "None")
+    stock = details.get("totalQuantity")
+    units_available = details.get("unitsAvailableForConsumption")
+    lowest_resale_price = details.get("lowestResalePrice")
+    quantity_limit_per_user = details.get("quantityLimitPerUser")
+
+    thumbnail = get_thumbnail(id)
+
+    details_embed = discord.Embed(
+        title=f"Details | {id}",
+        url=f"https://www.roblox.com/catalog/{id}/BetterBot",
+        color=0x1e5dff
+    )
+    details_embed.set_thumbnail(url=thumbnail)
+    details_embed.add_field(name="Name", value=name, inline=False)
+    details_embed.add_field(name="Creator", value=f"{creator_name} | {creator_id}", inline=False)
+    details_embed.add_field(name="Price", value=price, inline=False)
+    details_embed.add_field(name="Price Status", value=price_status, inline=False)
+    if units_available is not None and stock is not None:
+        details_embed.add_field(name="Stock", value=f"{units_available}/{stock}", inline=False)
+    details_embed.add_field(name="Description", value=f"```{description}```", inline=False)
+    details_embed.add_field(name="In-game", value=ingame, inline=False)
+    details_embed.add_field(name="Lowest Resale Price", value=lowest_resale_price, inline=False)
+    details_embed.add_field(name="Max Buys Per User", value=quantity_limit_per_user, inline=False)
+
+    await ctx.reply(embed=details_embed)
+
+@bot.command()
+async def checkversion(ctx):
+    try:
+        response = requests.get("https://raw.githubusercontent.com/PedrinBlox/BetterBot/main/version")
+        if response.status_code != 200:
+            pass
+        if not response.text.rstrip() == version:
+            await ctx.reply(f":x: | Your current BetterBot version is outdated! Current version: {version}, New version: {response.text.rstrip()}")
+        elif response.text.rstrip() == version:
+            await ctx.reply(f":white_check_mark: | Your current BetterBot version is up to date! Current version: {version}")
+    except Exception as e:
+        await ctx.reply(f':x: | An error occured: {e}')
+
+bot.run(token=token)
