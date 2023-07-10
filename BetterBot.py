@@ -1,30 +1,58 @@
 # BetterBot made by pe.drin#0
 # If you want to give suggestions for BetterBot or got errors, DM me it.
-# v3.0.0
+# v3.0.1
 
 #### Config ####
+
 token = "" # Your bot token (required)
 prefix = ">" # Your bot's prefix (required)
-your_id = "" # Your discord's ID (required for special commands)
+owner_ids = [""] # The discord account ID for the owners (required for special commands)
+
+# Command Shortcuts
+restart_shortcut = ["re"] # this is the shortcut for the restart command, instead of typing ">restart" you just type ">re"
+screenshot_shortcut = ["ss"] # this is the shortcut for the screenshot command, instead of typing ">screenshot" you just type ">ss"
+run_shortcut = ["r"] # this is the shortcut for the run command, instead of typing ">run" you just type ">r"
+kill_shortcut = ["k"] # this is the shortcut for the kill command, instead of typing ">kill" you just type ">k"
+details_shortcut = ["d"] # this is the shortcut for the details command, instead of typing ">details" you just type ">d"
+autorestart_shortcut = ["aure"] # this is the shortcut for the autorestart command, instead of typing ">autorestart" you just type ">aure"
+add_shortcut = ["ad"] # this is the shortcut for the add command, instead of typing ">add" you just type ">add", the command is already short lol
+remove_shortcut = ["rem"] # this is the shortcut for the remove command, instead of typing ">remove" you just type ">rem"
+checkversion_shortcut = ["cver"] # this is the shortcut for the checkversion command, instead of typing ">checkversion" you just type ">cver"
+items_shortcut = ["ite"] # this is the shortcut for the items command, instead of typing ">items" you just type ">ite"
+addowner_shortcut = ["addo"] # this is the shortcut for the addowner command, instead of typing ">addowner" you just type ">addo"
+cleanids_shortcut = ["cids"] # this is the shortcut for the cleanids command, instead of typing ">cleanids" you just type ">cids"
+autosearch_shortcut = ["auto"] # this is the shortcut for the autosearch command, instead of typing ">autosearch" you just type ">auto"
+
+# thanks to floppa6031#0 for the shortcuts
+
 ################
 
-import os
-import asyncio
-import time
-from pystyle import Colorate, Colors, Center
-import discord
-from discord.ext import commands
-import subprocess
-import json
-import aiohttp
-import requests
-import asyncio
+try:
+    import os
+    import asyncio
+    import time
+    from pystyle import Colorate, Colors, Center
+    import discord
+    from discord.ext import commands
+    import subprocess
+    import json 
+    import aiohttp
+    import requests
+    import asyncio
+except ModuleNotFoundError:
+    a = input(str('Not installed modules detected. Do you want to install them? (y/n) '))
+    if a.lower() == 'y':
+        os.system('pip install pystyle')
+        os.system('pip install discord.py')
+        os.system('pip install aiohttp')
+        os.system('pip install pillow')
 
 os.system('title BetterBot')
+os.system('cls' if os.name == 'nt' else 'clear')
 
 bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
 
-version = "3.0.0"
+version = "3.0.1"
 title = f"""
                                                                                                           v{version}
                  /$$$$$$$              /$$     /$$                         /$$$$$$$              /$$    
@@ -81,7 +109,7 @@ async def create_screenshot():
     return file, embed
 
 async def isowner(id):
-    if int(id) == int(your_id):
+    if str(id) in owner_ids:
         return True
     else:
         return False
@@ -130,7 +158,7 @@ async def on_ready():
 async def ping(ctx):
     await ctx.reply(f"Pong! {bot.latency}ms")
 
-@bot.command()
+@bot.command(aliases=screenshot_shortcut)
 async def screenshot(ctx):
     if await isowner(ctx.author.id):
         try:
@@ -143,7 +171,7 @@ async def screenshot(ctx):
         except Exception as e:
             await ctx.reply(f":x: | Failed to send the screenshot. Error {e}")
 
-@bot.command()
+@bot.command(aliases=restart_shortcut)
 async def restart(ctx):
     if await isowner(ctx.author.id):
         try:
@@ -159,10 +187,11 @@ async def restart(ctx):
                             os.system(f'taskkill /PID {pid} /F')
             os.system(f"start /B start cmd.exe @cmd /k python main.py")
             time.sleep(.5)
+            await ctx.reply(":white_check_mark: | Succesfully restarted xolo sniper!")
         except Exception as e:
             await ctx.reply(f":x: | An error occured while trying to restart xolo sniper! Error: {e}")
 
-@bot.command()
+@bot.command(aliases=run_shortcut)
 async def run(ctx):
     if await isowner(ctx.author.id):
         try:
@@ -173,7 +202,7 @@ async def run(ctx):
             time.sleep(.5)
             await ctx.reply(f":x: | An error occured while trying to start xolo sniper! Error: {e}")
 
-@bot.command()
+@bot.command(aliases=kill_shortcut)
 async def kill(ctx):
     if await isowner(ctx.author.id):
         try:
@@ -193,7 +222,7 @@ async def kill(ctx):
             time.sleep(.5)
             await ctx.reply(f":x: | An error occured while trying to close xolo sniper! Error: {e}")
 
-@bot.command()
+@bot.command(aliases=add_shortcut)
 async def add(ctx, id=None):
     if await isowner(ctx.author.id):
         if id is None:
@@ -234,7 +263,7 @@ async def add(ctx, id=None):
                 time.sleep(.5)
                 os.system(f"start /B start cmd.exe @cmd /k python main.py")
 
-@bot.command()
+@bot.command(aliases=remove_shortcut)
 async def remove(ctx, id=None):
     if await isowner(ctx.author.id):
         if id is None:
@@ -275,7 +304,7 @@ async def remove(ctx, id=None):
             else:
                 await ctx.reply(f":x: | ID {id} is not in the list!")
 
-@bot.command()
+@bot.command(aliases=items_shortcut)
 async def items(ctx):
     if await isowner(ctx.author.id):
         try:
@@ -298,7 +327,7 @@ async def items(ctx):
         except Exception as e:
             await ctx.reply(f":x: An error occurred while trying to get the items. Try restarting BetterBot. Error: {e}")
 
-@bot.command()
+@bot.command(aliases=cleanids_shortcut)
 async def cleanids(ctx):
     if await isowner(ctx.author.id):
         try:
@@ -331,7 +360,7 @@ async def cleanids(ctx):
         except Exception as e:
             await ctx.reply(f":x: An error occurred while trying to clean the IDs. Try restarting BetterBot. Error: {e}")
 
-@bot.command()
+@bot.command(aliases=autosearch_shortcut)
 async def autosearch(ctx, toggle=None):
     if await isowner(ctx.author.id):
         try:
@@ -375,10 +404,10 @@ async def autosearch(ctx, toggle=None):
         except Exception as e:
             await ctx.reply(f":x: An error occurred while trying to change autosearch value. Try restarting BetterBot. Error: {e}")
 
-@bot.command()
+@bot.command(aliases=details_shortcut)
 async def details(ctx, id=None):
     if id is None:
-        await ctx.reply(':x: | You need to put an item id! Example: .details 12345')
+        await ctx.reply(f':x: | You need to put an item id! Example: {prefix}details 12345')
         return
     
     details = await get_details(id)
@@ -419,7 +448,7 @@ async def details(ctx, id=None):
 
     await ctx.reply(embed=details_embed)
 
-@bot.command()
+@bot.command(aliases=checkversion_shortcut)
 async def checkversion(ctx):
     try:
         response = requests.get("https://raw.githubusercontent.com/PedrinBlox/BetterBot/main/version")
@@ -431,5 +460,91 @@ async def checkversion(ctx):
             await ctx.reply(f":white_check_mark: | Your current BetterBot version is up to date! Current version: {version}")
     except Exception as e:
         await ctx.reply(f':x: | An error occured: {e}')
+
+auto_restart_task = None
+auto_restart_status = "off"
+auto_restart_interval = 15
+
+async def auto_restart_bot():
+    global auto_restart_status
+    while True:
+        await asyncio.sleep(auto_restart_interval * 60)
+        if auto_restart_status == "on":
+            current_pid = os.getpid()
+            processes = subprocess.run(['tasklist'], capture_output=True, text=True).stdout.split('\n')
+            programs_to_kill = ['python.exe', 'cmd.exe']
+
+            for process in processes:
+                for program in programs_to_kill:
+                    if program in process:
+                        pid = int(process.split()[1])
+                        if pid != current_pid:
+                            os.system(f'taskkill /PID {pid} /F')
+
+            time.sleep(.5)
+            os.system(f"start /B start cmd.exe @cmd /k python main.py")
+            
+@bot.command(aliases=autorestart_shortcut)
+async def autorestart(ctx, command=None, minutes=None):
+    if await isowner(ctx.author.id):
+        global auto_restart_task, auto_restart_status, auto_restart_interval
+
+        if command is None:
+            await ctx.reply(f":x: | Missing argument 'command'. Usage: {prefix}autorestart <on/off/info/interval> [minutes]")
+            return
+        
+        if command == "on":
+            auto_restart_status = "on"
+            if auto_restart_task is not None:
+                auto_restart_task.cancel()
+            auto_restart_task = asyncio.create_task(auto_restart_bot())
+            await ctx.reply(":white_check_mark: | Auto restart enabled!")
+
+        elif command == "off":
+            auto_restart_status = "off"
+            if auto_restart_task is not None:
+                auto_restart_task.cancel()
+            await ctx.reply(":white_check_mark: | Auto restart disabled!")
+
+        elif command == "info":
+            await ctx.reply(f"Auto restart status: {auto_restart_status}\nInterval between restarts: {auto_restart_interval} minutes")
+
+        elif command == "interval":
+            if minutes is None:
+                await ctx.reply(f":x: | Missing argument 'minutes'. Usage: {prefix}autorestart interval <minutes>")
+                return
+            try:
+                auto_restart_interval = int(minutes)
+                await ctx.reply(f":white_check_mark: | Auto restart interval set to {auto_restart_interval} minutes!")
+            except ValueError:
+                await ctx.reply(f":x: | The interval must be a number! Usage: {prefix}autorestart interval <minutes>")
+                return
+
+        else:
+            await ctx.reply(f":x: | Invalid argument 'command'. Usage: {prefix}autorestart <on/off/info/interval> [minutes]")
+
+@bot.command(aliases=addowner_shortcut)
+async def addowner(ctx, new_id: str): # freaque.#0
+    if await isowner(ctx.author.id):
+        try:
+            with open('BetterBot.py', 'r') as f:
+                lines = f.readlines()
+
+            for i, line in enumerate(lines):
+                if line.strip().startswith('owner_ids ='):
+                    start = line.find('["')
+                    end = line.find('"]')
+                    current_ids = line[start+2:end].split('", "')
+                    if new_id not in current_ids:
+                        current_ids.append(new_id)
+                    lines[i] = 'owner_ids = ["' + '", "'.join(current_ids) + '"] # The discord account ID for the owners (required for special commands)\n'
+                    break
+
+            with open('BetterBot.py', 'w') as f:
+                f.writelines(lines)
+                
+            await ctx.reply(f':white_check_mark: | Successfully added owner ID {new_id} (restart betterbot to work)')
+        except Exception as e:
+            await ctx.reply(f":x: | An error occured: {e}")
 
 bot.run(token=token)
