@@ -4,9 +4,9 @@
 
 #### Config ####
 
-token = "" # Your bot token (required)
+token = "MTEyOTM5ODcyMzk3ODQ2MTIwNA.GZ8dMb.CwwqzugTqkWRsiCwK3DVulS2SULOvsupObZShw" # Your bot token (required)
 prefix = ">" # Your bot's prefix (required)
-owner_ids = [""] # The discord account ID for the owners (required for special commands)
+owner_ids = ["943665518840266782"] # The discord account ID for the owners (required for special commands)
 
 # Command Shortcuts
 restart_shortcut = ["re"] # this is the shortcut for the restart command, instead of typing ">restart" you just type ">re"
